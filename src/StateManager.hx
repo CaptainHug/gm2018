@@ -1,4 +1,5 @@
 package;
+import state.BaseState;
 
 /**
  * ...
@@ -13,4 +14,17 @@ class StateManager extends Sprite
 		
 	}
 	
+	
+	override public function dispose():Void
+	{
+		super.dispose();
+		
+	}
+	
+	
+	public function switchState(state:BaseState):Void
+	{
+		trace("switchState: " + state.name);
+		
+	}
 }

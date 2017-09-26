@@ -13,4 +13,10 @@ class PopupManager extends Sprite
 		
 	}
 	
+	
+	override public function dispose():Void
+	{
+		super.dispose();
+		
+	}
 }

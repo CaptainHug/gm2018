@@ -13,4 +13,10 @@ class BasePopup extends Sprite
 		
 	}
 	
+	
+	override public function dispose():Void
+	{
+		super.dispose();
+		
+	}
 }

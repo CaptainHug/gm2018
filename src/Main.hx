@@ -3,6 +3,7 @@ package;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.Lib;
+import state.State_Startup;
 
 /**
  * ...
@@ -18,6 +19,7 @@ class Main extends Sprite
 		// Assets:
 		// openfl.Assets.getBitmapData("img/assetname.jpg");
 		
+		/*
 		var test:Sprite = new Sprite();
 		test.graphics.beginFill(0xff00ff);
 		test.graphics.drawRect(0, 0, 32, 32);
@@ -28,6 +30,10 @@ class Main extends Sprite
 		test.addChild(img);
 		
 		trace("done!");
+		*/
+		
+		addChild(Kernel.getInstance());
+		Kernel.getInstance().getStateManager().switchState(new State_Startup());
 	}
 
 }

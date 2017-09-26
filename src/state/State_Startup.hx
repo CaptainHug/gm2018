@@ -4,7 +4,7 @@ package state;
  * ...
  * @author hug
  */
-class BaseState extends Sprite 
+class State_Startup extends BaseState 
 {
 
 	public function new() 
@@ -19,4 +19,5 @@ class BaseState extends Sprite
 		super.dispose();
 		
 	}
+	
 }

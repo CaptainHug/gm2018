@@ -28,7 +28,7 @@ class State_Startup extends BaseState
 		
 		// TODO: Kernel.getInstance().getPopupManager().
 		
-		Kernel.getInstance().getSoundManager().playMusic("audio/music.mp3");
+		Kernel.getInstance().getSoundManager().playMusic("audio/music");
 	}
 	
 	

@@ -26,7 +26,7 @@ class SoundManager
 	}
 	
 	
-	public function playMusic(music:String):Void
+	public function playMusic(music:String, appendExt:Bool=true):Void
 	{
 		if (_musicChannel != null) {
 			_musicChannel.stop();
@@ -36,6 +36,14 @@ class SoundManager
 		if (_music != null) {
 			_music.close();
 			_music = null;
+		}
+		
+		if (appendExt) {
+#if flash
+			music += ".mp3";
+#else
+			music += ".ogg";
+#end
 		}
 		
 		_music = Assets.getSound(music);

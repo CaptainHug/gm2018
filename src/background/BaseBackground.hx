@@ -1,10 +1,10 @@
-package state;
+package background;
 
 /**
  * ...
  * @author hug
  */
-class BaseState extends Sprite 
+class BaseBackground extends Sprite 
 {
 
 	public function new() 

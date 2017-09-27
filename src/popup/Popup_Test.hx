@@ -1,10 +1,10 @@
-package state;
+package popup;
 
 /**
  * ...
  * @author hug
  */
-class BaseState extends Sprite 
+class Popup_Test extends BasePopup 
 {
 
 	public function new() 
@@ -25,5 +25,4 @@ class BaseState extends Sprite
 		super.dispose();
 		
 	}
-	
 }

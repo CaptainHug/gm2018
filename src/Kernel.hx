@@ -9,6 +9,7 @@ class Kernel extends Sprite
 {
 	private static var _instance:Kernel = null;
 	
+	private var _backgroundManager:BackgroundManager;
 	private var _stateManager:StateManager;
 	private var _popupManager:PopupManager;
 	
@@ -20,6 +21,9 @@ class Kernel extends Sprite
 		if (_instance != null) {
 			throw new Error("This is a Singleton. Please use getInstance instead!");
 		}
+		
+		_backgroundManager = new BackgroundManager();
+		addChild(_backgroundManager);
 		
 		_stateManager = new StateManager();
 		addChild(_stateManager);
@@ -41,12 +45,18 @@ class Kernel extends Sprite
 	
 	override public function dispose():Void
 	{
+		if (_backgroundManager != null) { _backgroundManager.dispose(); _backgroundManager = null; }
 		if (_stateManager != null) { _stateManager.dispose(); _stateManager = null; }
 		if (_popupManager != null) { _popupManager.dispose(); _popupManager = null; }
 		
 		super.dispose();
 	}
 	
+	
+	public function getBackgroundManager():BackgroundManager
+	{
+		return _backgroundManager;
+	}
 	
 	public function getStateManager():StateManager
 	{

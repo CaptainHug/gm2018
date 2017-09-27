@@ -1,4 +1,5 @@
 package;
+import popup.BasePopup;
 import state.BaseState;
 
 /**
@@ -7,18 +8,22 @@ import state.BaseState;
  */
 class StateManager extends Sprite 
 {
-
+	private var _state:BaseState;
+	
+	
 	public function new() 
 	{
 		super();
 		
+		_state = null;
 	}
 	
 	
 	override public function dispose():Void
 	{
-		super.dispose();
+		switchState(null);
 		
+		super.dispose();
 	}
 	
 	
@@ -26,5 +31,21 @@ class StateManager extends Sprite
 	{
 		trace("switchState: " + state.name);
 		
+		if (_state != null) {
+			if (contains(_state)) {
+				removeChild(_state);
+			}
+			
+			_state.dispose();
+			_state = null;
+		}
+		
+		Kernel.getInstance().getPopupManager().popType(Type.getClassName(BasePopup));
+		
+		if (state != null) {
+			_state = state;
+			_state.init();
+			addChild(_state);
+		}
 	}
 }

@@ -77,19 +77,19 @@ class PopupManager extends Sprite
 	
 	
 	// removes all popups deriving from a specific class
-	public function popType(type:String):Void
+	public function popType(type:Class<Dynamic>):Void
 	{
 		if (_popups == null || _popups.length <= 0) {
 			return;
 		}
 		
-		// TODO: this won't work for base type, sub types, etc...
+		// TODO: check if this works for base type, sub types, etc...
 		// TODO: need to clone the AS3 "is" keyword behaviour
 		
 		var i = _popups.length;
 		while (i-- > 0) {
 			var p:BasePopup = _popups[i];
-			if (Type.getClassName(Type.getClass(p)) == type) {
+			if (Std.is(p, type)) {
 				removePopup(p);
 				p = null;
 			}
@@ -108,12 +108,12 @@ class PopupManager extends Sprite
 		}
 	}
 	
-	public function containsType(type:String):Bool
+	public function containsType(type:Class<Dynamic>):Bool
 	{
 		var i:Int;
 		for (i in 0..._popups.length) {
 			var p:BasePopup = _popups[i];
-			if (Type.getClassName(Type.getClass(p)) == type) {
+			if (Std.is(p, type)) {
 				
 				return true;
 			}
@@ -123,12 +123,12 @@ class PopupManager extends Sprite
 	}
 	
 	
-	public function getType(type:String):BasePopup
+	public function getType(type:Class<Dynamic>):BasePopup
 	{
 		var i:Int;
 		for (i in 0..._popups.length) {
 			var p:BasePopup = _popups[i];
-			if (Type.getClassName(Type.getClass(p)) == type) {
+			if (Std.is(p, type)) {
 				
 				return p;
 			}

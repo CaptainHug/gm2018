@@ -40,7 +40,7 @@ class StateManager extends Sprite
 			_state = null;
 		}
 		
-		Kernel.getInstance().getPopupManager().popType(Type.getClassName(BasePopup));
+		Kernel.getInstance().getPopupManager().popType(BasePopup);
 		
 		if (state != null) {
 			_state = state;

@@ -13,6 +13,8 @@ class Kernel extends Sprite
 	private var _stateManager:StateManager;
 	private var _popupManager:PopupManager;
 	
+	private var _soundManager:SoundManager;
+	
 	
 	public function new() 
 	{
@@ -30,6 +32,8 @@ class Kernel extends Sprite
 		
 		_popupManager = new PopupManager();
 		addChild(_popupManager);
+		
+		_soundManager = new SoundManager();
 	}
 	
 	
@@ -49,6 +53,8 @@ class Kernel extends Sprite
 		if (_stateManager != null) { _stateManager.dispose(); _stateManager = null; }
 		if (_popupManager != null) { _popupManager.dispose(); _popupManager = null; }
 		
+		if (_soundManager != null) { _soundManager.dispose(); _soundManager = null; }
+		
 		super.dispose();
 	}
 	
@@ -66,5 +72,10 @@ class Kernel extends Sprite
 	public function getPopupManager():PopupManager
 	{
 		return _popupManager;
+	}
+	
+	public function getSoundManager():SoundManager
+	{
+		return _soundManager;
 	}
 }

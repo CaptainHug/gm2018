@@ -1,8 +1,7 @@
 package;
 
-import openfl.Assets;
-import openfl.display.Bitmap;
-import openfl.Lib;
+import openfl.display.StageAlign;
+import openfl.display.StageScaleMode;
 import state.State_Startup;
 
 /**
@@ -16,11 +15,11 @@ class Main extends Sprite
 	{
 		super();
 		
-		// Assets:
-		// openfl.Assets.getBitmapData("img/assetname.jpg");
+		stage.scaleMode = StageScaleMode.NO_SCALE;
+		stage.align = StageAlign.TOP_LEFT;
 		
 		addChild(Kernel.getInstance());
 		Kernel.getInstance().getStateManager().switchState(new State_Startup());
 	}
-
+	
 }

@@ -24,6 +24,8 @@
 	<assets path="assets/audio" rename="audio" include="*.ogg" type="audio" unless="flash" />
 	<assets path="assets/audio" rename="audio" include="*.mp3" type="audio" if="flash" />
 	
+	<assets path="assets/fonts" rename="fonts" />
+	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
 	

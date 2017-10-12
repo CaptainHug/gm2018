@@ -3,6 +3,7 @@ import background.Background_Test;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.Bitmap;
+import ui.Label;
 
 /**
  * ...
@@ -28,6 +29,9 @@ class State_Startup extends BaseState
 		img.x = (Lib.current.stage.stageWidth - img.width) / 2;
 		img.y = (Lib.current.stage.stageHeight - img.height) / 2;
 		addChild(img);
+		
+		var label:Label = new Label();
+		addChild(label);
 		
 		// TODO: Kernel.getInstance().getPopupManager().
 		

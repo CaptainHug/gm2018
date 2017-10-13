@@ -1,4 +1,5 @@
 package ui;
+import openfl.events.Event;
 import openfl.events.MouseEvent;
 
 /**
@@ -7,6 +8,10 @@ import openfl.events.MouseEvent;
  */
 class Button extends UIElement 
 {
+	// events
+	inline public static var TRIGGERED:String = "onTriggered";
+	
+	// states
 	inline public static var STATE_UP:String = "up";
 	inline public static var STATE_DOWN:String = "down";
 	inline public static var STATE_HOVER:String = "hover";
@@ -23,6 +28,7 @@ class Button extends UIElement
 	private var _state:String;
 	
 	
+	public var enabled:Bool;
 	
 	
 	public function new() 
@@ -41,6 +47,8 @@ class Button extends UIElement
 		mouseEnabled = true;
 		buttonMode = true;
 		mouseChildren = false;
+		
+		enabled = true;
 		
 		// add event listeners
 		addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
@@ -100,6 +108,50 @@ class Button extends UIElement
 	
 	// TODO: set / get skins
 	
+	// state
+	public function setState(state:String):Void
+	{
+		if (_state == state) return;
+		
+		if (_skinContainer == null) return;
+		
+		if (!enabled) _state = STATE_DISABLED;
+		
+		_state = state;
+		
+		trace("Button: setState - " + state);
+		
+		switch(_state) {
+			case STATE_UP:
+				if (_upSkin != null) {
+					_skinContainer.removeChildren();
+					_skinContainer.addChild(_upSkin);
+				}
+				
+			case STATE_DOWN:
+				if (_downSkin != null) {
+					_skinContainer.removeChildren();
+					_skinContainer.addChild(_downSkin);
+				}
+			
+			case STATE_HOVER:
+				if (_hoverSkin != null) {
+					_skinContainer.removeChildren();
+					_skinContainer.addChild(_hoverSkin);
+				}
+			
+			case STATE_DISABLED:
+				if (_disabledSkin != null) {
+					_skinContainer.removeChildren();
+					_skinContainer.addChild(_disabledSkin);
+				}
+		}
+	}
+	public function getState():String
+	{
+		return _state;
+	}
+	
 	
 	// layout function to be called when properties change
 	override public function layout():Void
@@ -122,31 +174,33 @@ class Button extends UIElement
 	// TODO: event handlers
 	private function onMouseOver(e:MouseEvent):Void
 	{
-		trace("onMouseOver");
+		setState(STATE_HOVER);
 	}
 	
 	
 	private function onMouseOut(e:MouseEvent):Void
 	{
-		trace("onMouseOut");
+		setState(STATE_UP);
 	}
 	
 	
 	private function onMouseClick(e:MouseEvent):Void
 	{
-		trace("onMouseClick");
+		setState(STATE_UP);
+		
+		dispatchEvent(new Event(TRIGGERED));
 	}
 	
 	
 	private function onMouseDown(e:MouseEvent):Void
 	{
-		trace("onMouseDown");
+		setState(STATE_DOWN);
 	}
 	
 	
 	private function onMouseUp(e:MouseEvent):Void
 	{
-		trace("onMouseUp");
+		setState(STATE_UP);
 	}
 	
 }

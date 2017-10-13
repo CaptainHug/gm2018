@@ -3,7 +3,9 @@ import background.Background_Test;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.Bitmap;
+import openfl.events.Event;
 import ui.Button;
+import ui.Image;
 import ui.Label;
 
 /**
@@ -26,7 +28,7 @@ class State_Startup extends BaseState
 		
 		Kernel.getInstance().getBackgroundManager().switchBackground(new Background_Test());
 		
-		var img:Bitmap = new Bitmap(Assets.getBitmapData("img/gumball.png"));
+		var img:Image = new Image(Assets.getBitmapData("img/gumball.png"));
 		img.x = (Lib.current.stage.stageWidth - img.width) / 2;
 		img.y = (Lib.current.stage.stageHeight - img.height) / 2;
 		addChild(img);
@@ -41,6 +43,7 @@ class State_Startup extends BaseState
 		button.setWidth(200);
 		button.setHeight(50);
 		button.setLabel("HELLO");
+		button.addEventListener(Button.TRIGGERED, onClickButton);
 		addChild(button);
 		
 		// TODO: Kernel.getInstance().getPopupManager().
@@ -55,4 +58,9 @@ class State_Startup extends BaseState
 		
 	}
 	
+	
+	private function onClickButton(e:Event):Void
+	{
+		trace("click mo fo");
+	}
 }

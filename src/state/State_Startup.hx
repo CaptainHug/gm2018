@@ -32,9 +32,15 @@ class State_Startup extends BaseState
 		addChild(img);
 		
 		var label:Label = new Label();
+		label.setWidth(500);
+		label.setHeight(50);
+		label.setText("bodger");
 		addChild(label);
 		
 		var button:Button = new Button();
+		button.setWidth(200);
+		button.setHeight(50);
+		button.setLabel("HELLO");
 		addChild(button);
 		
 		// TODO: Kernel.getInstance().getPopupManager().

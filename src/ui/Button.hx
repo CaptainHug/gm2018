@@ -23,6 +23,8 @@ class Button extends UIElement
 	private var _state:String;
 	
 	
+	
+	
 	public function new() 
 	{
 		super();
@@ -30,9 +32,6 @@ class Button extends UIElement
 		_state = STATE_UP;
 		
 		_skinContainer = new Sprite();
-		_skinContainer.graphics.beginFill(0xffff00);
-		_skinContainer.graphics.drawRect(0, 0, 400, 100);
-		_skinContainer.graphics.endFill();
 		addChild(_skinContainer);
 		
 		_label = new Label();
@@ -49,6 +48,8 @@ class Button extends UIElement
 		addEventListener(MouseEvent.CLICK, onMouseClick);
 		addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		
+		layout();
 	}
 	
 	
@@ -80,11 +81,42 @@ class Button extends UIElement
 	}
 	
 	
-	// TODO: set / get label text
-	
-	// TODO: set / get dimensions
+	// set / get label text
+	public function setLabel(text:String):Void
+	{
+		if (_label != null) {
+			_label.setText(text);
+			layout();
+		}
+	}
+	public function getLabel():String
+	{
+		if (_label != null) {
+			return _label.getText();
+		}
+		
+		return null;
+	}
 	
 	// TODO: set / get skins
+	
+	
+	// layout function to be called when properties change
+	override public function layout():Void
+	{
+		super.layout();
+		
+		if (_skinContainer != null) {
+			_skinContainer.graphics.beginFill(0xffff00);
+			_skinContainer.graphics.drawRect(0, 0, _width, _height);
+			_skinContainer.graphics.endFill();
+		}
+		
+		if (_label != null) {
+			_label.setWidth(_width);
+			_label.setHeight(_height);
+		}
+	}
 	
 	
 	// TODO: event handlers

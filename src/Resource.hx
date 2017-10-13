@@ -9,7 +9,7 @@ import openfl.text.TextFormatAlign;
  */
 class Resource 
 {
-	public static var TFORM_DEFAULT:TextFormat = new TextFormat("Gotham-Medium", 20, 0xffffff, null, null, null, null, null, TextFormatAlign.LEFT);
+	public static var TFORM_DEFAULT:TextFormat = new TextFormat("Gotham-Medium", 20, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
 	
 	public function new() 
 	{

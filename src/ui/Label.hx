@@ -17,10 +17,7 @@ class Label extends UIElement
 		_textField = new TextField();
 		_textField.embedFonts = true;
 		_textField.defaultTextFormat = Resource.TFORM_DEFAULT;
-		_textField.width = 300;
-		_textField.height = 100;
 		_textField.selectable = false;
-		_textField.text = "BALLBAGS";
 		addChild(_textField);
 	}
 	
@@ -33,5 +30,39 @@ class Label extends UIElement
 		
 		super.dispose();
 		
+	}
+	
+	
+	public function setText(text:String):Void
+	{
+		if (_textField != null) {
+			_textField.text = text;
+			layout();
+		}
+	}
+	public function getText():String
+	{
+		if (_textField != null) {
+			return _textField.text;
+		}
+		
+		return null;
+	}
+	
+	
+	public function getTextField():TextField
+	{
+		return _textField;
+	}
+	
+	
+	override public function layout():Void
+	{
+		super.layout();
+		
+		if (_textField != null) {
+			_textField.width = _width;
+			_textField.height = _height;
+		}
 	}
 }

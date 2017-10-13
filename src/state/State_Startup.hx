@@ -3,6 +3,7 @@ import background.Background_Test;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.Bitmap;
+import ui.Button;
 import ui.Label;
 
 /**
@@ -32,6 +33,9 @@ class State_Startup extends BaseState
 		
 		var label:Label = new Label();
 		addChild(label);
+		
+		var button:Button = new Button();
+		addChild(button);
 		
 		// TODO: Kernel.getInstance().getPopupManager().
 		

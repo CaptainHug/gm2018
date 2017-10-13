@@ -1,10 +1,11 @@
 package background;
+import ui.Sprite;
 
 /**
  * ...
  * @author hug
  */
-class BaseBackground extends Sprite 
+class BaseBackground extends ui.Sprite 
 {
 
 	public function new() 

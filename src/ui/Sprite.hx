@@ -1,4 +1,4 @@
-package;
+package ui;
 
 import openfl.display.Sprite;
 
@@ -13,13 +13,11 @@ class Sprite extends openfl.display.Sprite
 	{
 		super();
 		
-		trace("Sprite: new");
 	}
 	
 	
 	public function dispose():Void
 	{
-		trace("Sprite: dispose");
 		removeChildren();
 	}
 	

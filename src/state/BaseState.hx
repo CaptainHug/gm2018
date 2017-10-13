@@ -1,10 +1,11 @@
 package state;
+import ui.Sprite;
 
 /**
  * ...
  * @author hug
  */
-class BaseState extends Sprite 
+class BaseState extends ui.Sprite 
 {
 
 	public function new() 

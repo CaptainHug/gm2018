@@ -1,11 +1,12 @@
 package;
 import openfl.errors.Error;
+import ui.Sprite;
 
 /**
  * ...
  * @author hug
  */
-class Kernel extends Sprite 
+class Kernel extends ui.Sprite 
 {
 	private static var _instance:Kernel = null;
 	

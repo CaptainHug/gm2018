@@ -5,7 +5,7 @@ import background.BaseBackground;
  * ...
  * @author hug
  */
-class BackgroundManager extends Sprite 
+class BackgroundManager extends ui.Sprite 
 {
 
 	private var _background:BaseBackground;
@@ -29,7 +29,7 @@ class BackgroundManager extends Sprite
 	
 	public function switchBackground(background:BaseBackground):Void
 	{
-		trace("switchBackground: " + background.name);
+		trace("switchBackground: " + Type.getClassName(Type.getClass(background)));
 		
 		if (_background != null) {
 			if (contains(_background)) {

@@ -1,10 +1,11 @@
 package popup;
+import ui.Sprite;
 
 /**
  * ...
  * @author hug
  */
-class BasePopup extends Sprite 
+class BasePopup extends ui.Sprite 
 {
 
 	public function new() 

@@ -1,11 +1,12 @@
 package;
 import popup.BasePopup;
+import ui.Sprite;
 
 /**
  * ...
  * @author hug
  */
-class PopupManager extends Sprite 
+class PopupManager extends ui.Sprite 
 {
 	private var _popups:Array<BasePopup>;
 	

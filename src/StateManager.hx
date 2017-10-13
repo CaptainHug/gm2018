@@ -1,12 +1,13 @@
 package;
 import popup.BasePopup;
 import state.BaseState;
+import ui.Sprite;
 
 /**
  * ...
  * @author hug
  */
-class StateManager extends Sprite 
+class StateManager extends ui.Sprite 
 {
 	private var _state:BaseState;
 	
@@ -29,7 +30,7 @@ class StateManager extends Sprite
 	
 	public function switchState(state:BaseState):Void
 	{
-		trace("switchState: " + state.name);
+		trace("switchState: " + Type.getClassName(Type.getClass(state)));
 		
 		if (_state != null) {
 			if (contains(_state)) {

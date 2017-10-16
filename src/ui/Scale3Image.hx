@@ -88,6 +88,8 @@ class Scale3Image extends Image
 	
 	override public function layout():Void
 	{
+		super.layout();
+		
 		// resize/position elements
 		var newCenterArea:Float = _width - (_leftArea + _rightArea);
 		

@@ -5,11 +5,13 @@ import openfl.Lib;
 import openfl.display.Bitmap;
 import openfl.events.Event;
 import openfl.events.KeyboardEvent;
+import openfl.geom.Rectangle;
 import openfl.ui.Keyboard;
 import ui.Button;
 import ui.Image;
 import ui.Label;
 import ui.Scale3Image;
+import ui.Scale9Image;
 
 /**
  * ...
@@ -19,6 +21,7 @@ class State_Startup extends BaseState
 {
 	private var _button:Button;
 	private var _scale3:Scale3Image;
+	private var _scale9:Scale9Image;
 	
 	
 	public function new() 
@@ -56,6 +59,11 @@ class State_Startup extends BaseState
 		_scale3.setHeight(103);
 		addChild(_scale3);
 		
+		_scale9 = new Scale9Image(Assets.getBitmapData("img/ui/button_hover.png"), new Rectangle(80, 37, 40, 26));
+		_scale9.setWidth(500);
+		_scale9.setHeight(500);
+		addChild(_scale9);
+		
 		// TODO: Kernel.getInstance().getPopupManager().
 		
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
@@ -76,6 +84,11 @@ class State_Startup extends BaseState
 		if (_scale3 != null) {
 			_scale3.dispose();
 			_scale3 = null;
+		}
+		
+		if (_scale9 != null) {
+			_scale9.dispose();
+			_scale9 = null;
 		}
 		
 		super.dispose();
@@ -100,11 +113,32 @@ class State_Startup extends BaseState
 				if (_scale3 != null) {
 					_scale3.setWidth(_scale3.getWidth() + 1);
 				}
+				
+				if (_scale9 != null) {
+					_scale9.setWidth(_scale9.getWidth() + 1);
+				}
 			}
 			case Keyboard.LEFT:
 			{
 				if(_scale3 != null) {
 					_scale3.setWidth(_scale3.getWidth() - 1);
+				}
+				
+				if (_scale9 != null) {
+					_scale9.setWidth(_scale9.getWidth() - 1);
+				}
+			}
+			
+			case Keyboard.UP:
+			{
+				if (_scale9 != null) {
+					_scale9.setHeight(_scale9.getHeight() - 1);
+				}
+			}
+			case Keyboard.DOWN:
+			{
+				if (_scale9 != null) {
+					_scale9.setHeight(_scale9.getHeight() + 1);
 				}
 			}
 		}

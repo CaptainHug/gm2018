@@ -33,4 +33,16 @@ class Image extends UIElement
 		
 	}
 	
+	
+	override public function setWidth(val:Float):Void
+	{
+		super.setWidth(val);
+		width = _width;
+	}
+	
+	override public function setHeight(val:Float):Void
+	{
+		super.setHeight(val);
+		height = _height;
+	}
 }

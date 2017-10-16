@@ -18,6 +18,7 @@ class Button extends UIElement
 	inline public static var STATE_DISABLED:String = "disabled";
 	
 	private var _skinContainer:Sprite;
+	private var _currentSkin:UIElement;
 	private var _upSkin:UIElement;
 	private var _downSkin:UIElement;
 	private var _hoverSkin:UIElement;
@@ -28,19 +29,22 @@ class Button extends UIElement
 	private var _state:String;
 	
 	
-	public var enabled:Bool;
-	
-	
-	public function new() 
+	public function new(upSkin:UIElement, label:String = "", downSkin:UIElement = null, hoverSkin:UIElement = null, disabledSkin:UIElement = null) 
 	{
 		super();
 		
-		_state = STATE_UP;
+		_state = "";
 		
 		_skinContainer = new Sprite();
 		addChild(_skinContainer);
 		
+		_upSkin = upSkin;
+		_downSkin = downSkin;
+		_hoverSkin = hoverSkin;
+		_disabledSkin = disabledSkin;
+		
 		_label = new Label();
+		_label.setText(label);
 		addChild(_label);
 		
 		// set button mode / mouse children etc
@@ -48,14 +52,14 @@ class Button extends UIElement
 		buttonMode = true;
 		mouseChildren = false;
 		
-		enabled = true;
-		
 		// add event listeners
 		addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
 		addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 		addEventListener(MouseEvent.CLICK, onMouseClick);
 		addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		
+		setState(STATE_UP);
 		
 		layout();
 	}
@@ -70,11 +74,29 @@ class Button extends UIElement
 		removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 		removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		
-		// TODO: clean up skins
-		
 		if (_skinContainer != null) {
 			_skinContainer.dispose();
 			_skinContainer = null;
+		}
+		
+		if (_upSkin != null) {
+			_upSkin.dispose();
+			_upSkin = null;
+		}
+		
+		if (_downSkin != null) {
+			_downSkin.dispose();
+			_downSkin = null;
+		}
+		
+		if (_hoverSkin != null) {
+			_hoverSkin.dispose();
+			_hoverSkin = null;
+		}
+		
+		if (_disabledSkin != null) {
+			_disabledSkin.dispose();
+			_disabledSkin = null;
 		}
 		
 		if (_label != null) {
@@ -83,6 +105,7 @@ class Button extends UIElement
 		}
 		
 		_state = null;
+		_currentSkin = null;
 		
 		super.dispose();
 		
@@ -115,7 +138,7 @@ class Button extends UIElement
 		
 		if (_skinContainer == null) return;
 		
-		if (!enabled) _state = STATE_DISABLED;
+		if (!_enabled) _state = STATE_DISABLED;
 		
 		_state = state;
 		
@@ -126,26 +149,33 @@ class Button extends UIElement
 				if (_upSkin != null) {
 					_skinContainer.removeChildren();
 					_skinContainer.addChild(_upSkin);
+					_currentSkin = _upSkin;
 				}
 				
 			case STATE_DOWN:
 				if (_downSkin != null) {
 					_skinContainer.removeChildren();
 					_skinContainer.addChild(_downSkin);
+					_currentSkin = _downSkin;
 				}
 			
 			case STATE_HOVER:
 				if (_hoverSkin != null) {
 					_skinContainer.removeChildren();
 					_skinContainer.addChild(_hoverSkin);
+					_currentSkin = _hoverSkin;
 				}
 			
 			case STATE_DISABLED:
 				if (_disabledSkin != null) {
 					_skinContainer.removeChildren();
 					_skinContainer.addChild(_disabledSkin);
+					_currentSkin = _disabledSkin;
 				}
 		}
+		
+		// TODO: only trigger if something changed
+		layout();
 	}
 	public function getState():String
 	{
@@ -158,10 +188,9 @@ class Button extends UIElement
 	{
 		super.layout();
 		
-		if (_skinContainer != null) {
-			_skinContainer.graphics.beginFill(0xffff00);
-			_skinContainer.graphics.drawRect(0, 0, _width, _height);
-			_skinContainer.graphics.endFill();
+		if (_currentSkin != null) {
+			_currentSkin.setWidth(_width);
+			_currentSkin.setHeight(_height);
 		}
 		
 		if (_label != null) {
@@ -171,21 +200,46 @@ class Button extends UIElement
 	}
 	
 	
+	override public function setEnabled(val:Bool):Void
+	{
+		super.setEnabled(val);
+		
+		if (_enabled) {
+			setState(STATE_UP);
+			
+			mouseEnabled = true;
+			buttonMode = true;
+		}
+		else {
+			setState(STATE_DISABLED);
+			
+			mouseEnabled = false;
+			buttonMode = false;
+		}
+	}
+	
+	
 	// TODO: event handlers
 	private function onMouseOver(e:MouseEvent):Void
 	{
+		if (!_enabled) return;
+		
 		setState(STATE_HOVER);
 	}
 	
 	
 	private function onMouseOut(e:MouseEvent):Void
 	{
+		if (!_enabled) return;
+		
 		setState(STATE_UP);
 	}
 	
 	
 	private function onMouseClick(e:MouseEvent):Void
 	{
+		if (!_enabled) return;
+		
 		setState(STATE_UP);
 		
 		dispatchEvent(new Event(TRIGGERED));
@@ -194,12 +248,16 @@ class Button extends UIElement
 	
 	private function onMouseDown(e:MouseEvent):Void
 	{
+		if (!_enabled) return;
+		
 		setState(STATE_DOWN);
 	}
 	
 	
 	private function onMouseUp(e:MouseEvent):Void
 	{
+		if (!_enabled) return;
+		
 		setState(STATE_UP);
 	}
 	

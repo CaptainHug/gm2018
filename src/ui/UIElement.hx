@@ -8,6 +8,7 @@ class UIElement extends Sprite
 {
 	private var _width:Float;
 	private var _height:Float;
+	private var _enabled:Bool;
 	
 	
 	public function new() 
@@ -16,6 +17,7 @@ class UIElement extends Sprite
 		
 		_width = 0;
 		_height = 0;
+		_enabled = true;
 	}
 	
 	
@@ -45,6 +47,16 @@ class UIElement extends Sprite
 	public function getHeight():Float
 	{
 		return _height;
+	}
+	
+	
+	public function getEnabled():Bool
+	{
+		return _enabled;
+	}
+	public function setEnabled(val:Bool):Void
+	{
+		_enabled = val;
 	}
 	
 	

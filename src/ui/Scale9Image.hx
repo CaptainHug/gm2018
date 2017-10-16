@@ -1,4 +1,6 @@
 package ui;
+import openfl.display.BitmapData;
+import openfl.geom.Rectangle;
 import ui.Image;
 
 /**
@@ -8,10 +10,13 @@ import ui.Image;
 class Scale9Image extends Image 
 {
 
-	public function new() 
+	public function new(bitmapData:BitmapData, scale9Rect:Rectangle) 
 	{
-		super();
+		super(bitmapData);
 		
+		removeChild(_bitmap);
+		
+		// TODO: split up the image
 	}
 	
 	
@@ -21,4 +26,18 @@ class Scale9Image extends Image
 		
 	}
 	
+	
+	override public function setWidth(val:Float):Void
+	{
+		super.setWidth(val);
+		
+		// TODO: resize/position elements
+	}
+	
+	override public function setHeight(val:Float):Void
+	{
+		super.setHeight(val);
+		
+		// TODO: resize/position elements
+	}
 }

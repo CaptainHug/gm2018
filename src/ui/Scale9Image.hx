@@ -77,9 +77,22 @@ class Scale9Image extends Image
 	{
 		super.layout();
 		
+		var newWidth:Float = _width;
+		var newHeight:Float = _height;
+		
+		var useAltScale:Bool = false;
+		if (_width < _bitmap.width) {
+			newWidth = _bitmap.width;
+			useAltScale = true;
+		}
+		if (_height < _bitmap.height) {
+			newHeight = _bitmap.height;
+			useAltScale = true;
+		}
+		
 		// layout based on current dimensions
-		var cols:Array<Float> = [0, _scale9Rect.left, _width - _scale9Rect.right, _width];
-		var rows:Array<Float> = [0, _scale9Rect.top, _height - _scale9Rect.bottom, _height];
+		var cols:Array<Float> = [0, _scale9Rect.left, newWidth - _scale9Rect.right, newWidth];
+		var rows:Array<Float> = [0, _scale9Rect.top, newHeight - _scale9Rect.bottom, newHeight];
 		
 		for (i in 0...3) {
 			for(j in 0...3) {
@@ -88,6 +101,11 @@ class Scale9Image extends Image
 				_parts[i][j].width = cols[j+1] - cols[j];
 				_parts[i][j].height = rows[i+1] - rows[i];
 			}
+		}
+		
+		if (useAltScale) {
+			width = _width;
+			height = _height;
 		}
 	}
 }

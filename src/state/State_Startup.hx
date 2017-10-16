@@ -60,8 +60,8 @@ class State_Startup extends BaseState
 		addChild(_scale3);
 		
 		_scale9 = new Scale9Image(Assets.getBitmapData("img/ui/button_hover.png"), new Rectangle(80, 37, 40, 26));
-		_scale9.setWidth(500);
-		_scale9.setHeight(500);
+		_scale9.setWidth(80);
+		_scale9.setHeight(100);
 		addChild(_scale9);
 		
 		// TODO: Kernel.getInstance().getPopupManager().

@@ -19,6 +19,8 @@ import ui.Scale9Image;
  */
 class State_Startup extends BaseState 
 {
+	private var _image:Image;
+	private var _label:Label;
 	private var _button:Button;
 	private var _scale3:Scale3Image;
 	private var _scale9:Scale9Image;
@@ -37,22 +39,22 @@ class State_Startup extends BaseState
 		
 		Kernel.getInstance().getBackgroundManager().switchBackground(new Background_Test());
 		
-		var img:Image = new Image(Assets.getBitmapData("img/gumball.png"));
-		img.x = (Lib.current.stage.stageWidth - img.width) / 2;
-		img.y = (Lib.current.stage.stageHeight - img.height) / 2;
-		addChild(img);
+		_image = new Image(Assets.getBitmapData("img/gumball.png"));
+		_image.x = (Lib.current.stage.stageWidth - _image.width) / 2;
+		_image.y = (Lib.current.stage.stageHeight - _image.height) / 2;
+		addChild(_image);
 		
-		var label:Label = new Label();
-		label.setWidth(500);
-		label.setHeight(50);
-		label.setText("bodger");
-		addChild(label);
+		_label = new Label();
+		_label.setWidth(500);
+		_label.setHeight(50);
+		_label.setText("bodger");
+		addChild(_label);
 		
 		_button = new Button(new Image(Assets.getBitmapData("img/ui/button_up.png")), "BUTTON", new Image(Assets.getBitmapData("img/ui/button_down.png")), new Image(Assets.getBitmapData("img/ui/button_hover.png")), new Image(Assets.getBitmapData("img/ui/button_disabled.png")));
 		_button.setWidth(200);
 		_button.setHeight(103);
 		_button.addEventListener(Button.TRIGGERED, onClickButton);
-		//addChild(_button);
+		addChild(_button);
 		
 		_scale3 = new Scale3Image(Assets.getBitmapData("img/ui/button_up.png"), 80, 40);
 		_scale3.setWidth(300);
@@ -75,6 +77,16 @@ class State_Startup extends BaseState
 	override public function dispose():Void
 	{
 		Lib.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		
+		if (_image != null) {
+			_image.dispose();
+			_image = null;
+		}
+		
+		if (_label != null) {
+			_label.dispose();
+			_label = null;
+		}
 		
 		if (_button != null) {
 			_button.dispose();

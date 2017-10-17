@@ -45,10 +45,12 @@ class State_Startup extends BaseState
 		_image.y = (Lib.current.stage.stageHeight - _image.height) / 2;
 		//addChild(_image);
 		
+		/*
 		graphics.clear();
 		graphics.beginFill(0x00ffff);
 		graphics.drawRect(0, 0, 500, 150);
 		graphics.endFill();
+		*/
 		
 		_label = new Label();
 		_label.setWidth(500);
@@ -58,13 +60,13 @@ class State_Startup extends BaseState
 		_label.setColour(0xff00ff);
 		_label.setAlign(TextFormatAlign.CENTER);
 		_label.setVerticalAlign(Label.ALIGN_CENTER);
-		addChild(_label);
+		//addChild(_label);
 		
 		_button = new Button(new Image(Assets.getBitmapData("img/ui/button_up.png")), "BUTTON", new Image(Assets.getBitmapData("img/ui/button_down.png")), new Image(Assets.getBitmapData("img/ui/button_hover.png")), new Image(Assets.getBitmapData("img/ui/button_disabled.png")));
 		_button.setWidth(200);
 		_button.setHeight(103);
 		_button.addEventListener(Button.TRIGGERED, onClickButton);
-		//addChild(_button);
+		addChild(_button);
 		
 		_scale3 = new Scale3Image(Assets.getBitmapData("img/ui/button_up.png"), 80, 40);
 		_scale3.setWidth(300);

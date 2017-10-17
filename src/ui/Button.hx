@@ -1,6 +1,7 @@
 package ui;
 import openfl.events.Event;
 import openfl.events.MouseEvent;
+import openfl.text.TextFormatAlign;
 
 /**
  * ...
@@ -45,6 +46,8 @@ class Button extends UIElement
 		
 		_label = new Label();
 		_label.setText(label);
+		_label.setAlign(TextFormatAlign.CENTER);
+		_label.setVerticalAlign(Label.ALIGN_CENTER);
 		addChild(_label);
 		
 		// set button mode / mouse children etc
@@ -113,14 +116,14 @@ class Button extends UIElement
 	
 	
 	// set / get label text
-	public function setLabel(text:String):Void
+	public function setText(text:String):Void
 	{
 		if (_label != null) {
 			_label.setText(text);
 			layout();
 		}
 	}
-	public function getLabel():String
+	public function getText():String
 	{
 		if (_label != null) {
 			return _label.getText();
@@ -128,6 +131,13 @@ class Button extends UIElement
 		
 		return null;
 	}
+	
+	
+	public function getLabel():Label
+	{
+		return _label;
+	}
+	
 	
 	// TODO: set / get skins
 	

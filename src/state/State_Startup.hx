@@ -1,5 +1,7 @@
 package state;
 import background.Background_Test;
+import motion.Actuate;
+import motion.easing.Linear;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.Bitmap;
@@ -94,6 +96,8 @@ class State_Startup extends BaseState
 		_anim.play();
 		addChild(_anim);
 		
+		restartTween();
+		
 		// TODO: Kernel.getInstance().getPopupManager().
 		
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
@@ -146,6 +150,13 @@ class State_Startup extends BaseState
 		if (_anim != null) {
 			_anim.play();
 		}
+	}
+	
+	
+	private function restartTween()
+	{
+		_anim.x = 0 - _anim.width;
+		Actuate.tween(_anim, 7, {x:Lib.current.stage.stageWidth}).ease(Linear.easeNone).onComplete(restartTween);
 	}
 	
 	

@@ -3,13 +3,13 @@ package ui.data;
 import openfl.display.Bitmap;
 import openfl.display.PixelSnapping;
 import openfl.events.Event;
-import ui.Sprite;
+import ui.UIElement;
 
 /**
  * ...
  * @author hug
  */
-class AnimatedSprite extends Sprite 
+class AnimatedSprite extends UIElement 
 {
 	private var _spriteSheet:SpriteSheet;
 	private var _states:Map<String, AnimationState>;
@@ -99,7 +99,13 @@ class AnimatedSprite extends Sprite
 			if (!_currentState.getLoop() && _currentFrame >= _currentState.getFrameCount()) return;
 			
 			var currentTime:Float = Date.now().getTime();
-			if((currentTime - _lastFrameTime) > ((1 / _currentState.getSpeed()) * 1000)) {
+			var oneSec:Int = 1000;
+		#if (neko || cpp || java)
+			currentTime = Sys.time();
+			oneSec = 1;
+		#end
+			
+			if((currentTime - _lastFrameTime) > ((1 / _currentState.getSpeed()) * oneSec)) {
 				
 				_currentFrame++;
 				

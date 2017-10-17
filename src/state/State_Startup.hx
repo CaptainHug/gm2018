@@ -153,6 +153,8 @@ class State_Startup extends BaseState
 		if (_anim != null) {
 			_anim.play();
 		}
+		
+		Kernel.getInstance().getSoundManager().playSound("audio/noise.wav");
 	}
 	
 	

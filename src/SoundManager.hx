@@ -64,6 +64,10 @@ class SoundManager
 	
 	public function playSound(sound:String):Void
 	{
-		// TODO: play sound
+		// play sound
+		var sound:Sound = Assets.getSound(sound);
+		if (sound != null) {
+			sound.play();
+		}
 	}
 }

@@ -21,8 +21,8 @@
 	<icon path="assets/openfl.svg" />
 	<assets path="assets/img" rename="img" />
 	
-	<assets path="assets/audio" rename="audio" include="*.ogg" type="audio" unless="flash" />
-	<assets path="assets/audio" rename="audio" include="*.mp3" type="audio" if="flash" />
+	<assets path="assets/audio" rename="audio" include="*.ogg|*.wav" type="audio" unless="flash" />
+	<assets path="assets/audio" rename="audio" include="*.mp3|*.wav" type="audio" if="flash" />
 	
 	<assets path="assets/fonts" rename="fonts" />
 	

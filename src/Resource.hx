@@ -9,7 +9,16 @@ import openfl.text.TextFormatAlign;
  */
 class Resource 
 {
-	public static var TFORM_DEFAULT:TextFormat = new TextFormat("Gotham-Medium", 20, 0xffffff, null, null, null, null, null, TextFormatAlign.CENTER);
+	// gfx
+	
+	// sfx
+	
+	// fonts
+	inline public static var FONT_GOTHAM:String = "Gotham-Medium";
+	inline public static var FONT_DEFAULT:String = FONT_GOTHAM;
+	
+	// colours
+	
 	
 	public function new() 
 	{

@@ -6,6 +6,7 @@ import openfl.display.Bitmap;
 import openfl.events.Event;
 import openfl.events.KeyboardEvent;
 import openfl.geom.Rectangle;
+import openfl.text.TextFormatAlign;
 import openfl.ui.Keyboard;
 import ui.Button;
 import ui.Image;
@@ -42,29 +43,38 @@ class State_Startup extends BaseState
 		_image = new Image(Assets.getBitmapData("img/gumball.png"));
 		_image.x = (Lib.current.stage.stageWidth - _image.width) / 2;
 		_image.y = (Lib.current.stage.stageHeight - _image.height) / 2;
-		addChild(_image);
+		//addChild(_image);
+		
+		graphics.clear();
+		graphics.beginFill(0x00ffff);
+		graphics.drawRect(0, 0, 500, 150);
+		graphics.endFill();
 		
 		_label = new Label();
 		_label.setWidth(500);
-		_label.setHeight(50);
+		_label.setHeight(150);
 		_label.setText("bodger");
+		_label.setSize(50);
+		_label.setColour(0xff00ff);
+		_label.setAlign(TextFormatAlign.CENTER);
+		_label.setVerticalAlign(Label.ALIGN_CENTER);
 		addChild(_label);
 		
 		_button = new Button(new Image(Assets.getBitmapData("img/ui/button_up.png")), "BUTTON", new Image(Assets.getBitmapData("img/ui/button_down.png")), new Image(Assets.getBitmapData("img/ui/button_hover.png")), new Image(Assets.getBitmapData("img/ui/button_disabled.png")));
 		_button.setWidth(200);
 		_button.setHeight(103);
 		_button.addEventListener(Button.TRIGGERED, onClickButton);
-		addChild(_button);
+		//addChild(_button);
 		
 		_scale3 = new Scale3Image(Assets.getBitmapData("img/ui/button_up.png"), 80, 40);
 		_scale3.setWidth(300);
 		_scale3.setHeight(103);
-		addChild(_scale3);
+		//addChild(_scale3);
 		
 		_scale9 = new Scale9Image(Assets.getBitmapData("img/ui/button_hover.png"), new Rectangle(80, 37, 40, 26));
 		_scale9.setWidth(80);
 		_scale9.setHeight(100);
-		addChild(_scale9);
+		//addChild(_scale9);
 		
 		// TODO: Kernel.getInstance().getPopupManager().
 		

@@ -13,6 +13,7 @@ import ui.Image;
 import ui.Label;
 import ui.Scale3Image;
 import ui.Scale9Image;
+import ui.data.SpriteSheet;
 
 /**
  * ...
@@ -77,6 +78,10 @@ class State_Startup extends BaseState
 		_scale9.setWidth(80);
 		_scale9.setHeight(100);
 		//addChild(_scale9);
+		
+		var ssTest:SpriteSheet = new SpriteSheet(Assets.getText("img/cityscene.json"), Assets.getBitmapData("img/cityscene.png"));
+		var ssTestImage:Image = new Image(ssTest.getBitmapData("capguy/walk/0002"));
+		addChild(ssTestImage);
 		
 		// TODO: Kernel.getInstance().getPopupManager().
 		

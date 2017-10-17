@@ -13,6 +13,8 @@ import ui.Image;
 import ui.Label;
 import ui.Scale3Image;
 import ui.Scale9Image;
+import ui.data.AnimatedSprite;
+import ui.data.AnimationState;
 import ui.data.SpriteSheet;
 
 /**
@@ -26,6 +28,7 @@ class State_Startup extends BaseState
 	private var _button:Button;
 	private var _scale3:Scale3Image;
 	private var _scale9:Scale9Image;
+	private var _anim:AnimatedSprite;
 	
 	
 	public function new() 
@@ -80,8 +83,16 @@ class State_Startup extends BaseState
 		//addChild(_scale9);
 		
 		var ssTest:SpriteSheet = new SpriteSheet(Assets.getText("img/cityscene.json"), Assets.getBitmapData("img/cityscene.png"));
-		var ssTestImage:Image = new Image(ssTest.getBitmapData("capguy/walk/0002"));
-		addChild(ssTestImage);
+		
+		var bg:Image = new Image(ssTest.getBitmapData("background"));
+		addChild(bg);
+		
+		var animState:AnimationState = new AnimationState(["capguy/walk/0001", "capguy/walk/0002", "capguy/walk/0003", "capguy/walk/0004", "capguy/walk/0005", "capguy/walk/0006", "capguy/walk/0007", "capguy/walk/0008"], 12, true);
+		_anim = new AnimatedSprite(ssTest);
+		_anim.addState("walk", animState);
+		_anim.setState("walk");
+		_anim.play();
+		addChild(_anim);
 		
 		// TODO: Kernel.getInstance().getPopupManager().
 		
@@ -130,6 +141,10 @@ class State_Startup extends BaseState
 		
 		if (_button != null) {
 			_button.setEnabled(false);
+		}
+		
+		if (_anim != null) {
+			_anim.play();
 		}
 	}
 	

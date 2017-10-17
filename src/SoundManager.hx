@@ -60,4 +60,10 @@ class SoundManager
 		
 		// TODO: forceClear param?
 	}
+	
+	
+	public function playSound(sound:String):Void
+	{
+		// TODO: play sound
+	}
 }

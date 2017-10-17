@@ -68,12 +68,6 @@ class State_Startup extends BaseState
 		_label.setVerticalAlign(Label.ALIGN_CENTER);
 		//addChild(_label);
 		
-		_button = new Button(new Image(Assets.getBitmapData("img/ui/button_up.png")), "BUTTON", new Image(Assets.getBitmapData("img/ui/button_down.png")), new Image(Assets.getBitmapData("img/ui/button_hover.png")), new Image(Assets.getBitmapData("img/ui/button_disabled.png")));
-		_button.setWidth(200);
-		_button.setHeight(103);
-		_button.addEventListener(Button.TRIGGERED, onClickButton);
-		addChild(_button);
-		
 		_scale3 = new Scale3Image(Assets.getBitmapData("img/ui/button_up.png"), 80, 40);
 		_scale3.setWidth(300);
 		_scale3.setHeight(103);
@@ -99,6 +93,13 @@ class State_Startup extends BaseState
 		restartTween();
 		
 		// TODO: Kernel.getInstance().getPopupManager().
+		
+		_button = new Button(new Image(Assets.getBitmapData("img/ui/button_up.png")), "BUTTON", new Image(Assets.getBitmapData("img/ui/button_down.png")), new Image(Assets.getBitmapData("img/ui/button_hover.png")), new Image(Assets.getBitmapData("img/ui/button_disabled.png")));
+		_button.y = 350;
+		_button.setWidth(200);
+		_button.setHeight(103);
+		_button.addEventListener(Button.TRIGGERED, onClickButton);
+		addChild(_button);
 		
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		
@@ -143,9 +144,11 @@ class State_Startup extends BaseState
 	{
 		trace("click mo fo");
 		
+		/*
 		if (_button != null) {
 			_button.setEnabled(false);
 		}
+		*/
 		
 		if (_anim != null) {
 			_anim.play();

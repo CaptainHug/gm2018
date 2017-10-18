@@ -23,7 +23,7 @@ class State_Login extends BaseState
 	{
 		super.init();
 		
-		trace("State_Login");
+		trace("State_Login: init");
 		
 		_server = Kernel.getInstance().getGameServer();
 		_server.addEventListener(GameServerEvent.onConnection, onConnection);
@@ -35,6 +35,8 @@ class State_Login extends BaseState
 	
 	override public function dispose():Void
 	{
+		trace("State_Login: dispose");
+		
 		if (_server != null) {
 			_server.removeEventListener(GameServerEvent.onConnection, onConnection);
 			_server.removeEventListener(GameServerEvent.onConnectionLost, onConnectionLost);

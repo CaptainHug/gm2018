@@ -26,12 +26,13 @@ class State_GameRoom extends BaseState
 	{
 		super.init();
 		
-		trace("State_GameRoom");
+		trace("State_GameRoom: init");
 		
 		_server = Kernel.getInstance().getGameServer();
 		_server.addEventListener(GameServerEvent.onExtensionResponse, onExtensionResponse);
 		
-		_server.sendExtMessage("game", "onJoinRoom", {});
+		_server.sendExtMessage("game", "joinRoom", {});
+		
 		
 		graphics.beginFill(0xff00ff);
 		graphics.drawRect(0, 0, Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
@@ -46,6 +47,8 @@ class State_GameRoom extends BaseState
 	
 	override public function dispose():Void
 	{
+		trace("State_GameRoom: dispose");
+		
 		Lib.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		removeEventListener(MouseEvent.CLICK, onClick);
 		
@@ -63,13 +66,13 @@ class State_GameRoom extends BaseState
 		var posX:Int = cast(e.stageX, Int);
 		var posY:Int = cast(e.stageY, Int);
 		
-		_server.sendExtMessage("game", "onMove", {posX:posX, posY:posY});
+		_server.sendExtMessage("game", "move", {posX:posX, posY:posY});
 	}
 	
 	
 	private function onKeyDown(e:KeyboardEvent):Void
 	{
-		_server.sendExtMessage("game", "onChat", {message:e.keyCode});
+		_server.sendExtMessage("game", "chat", {message:e.keyCode});
 	}
 	
 	

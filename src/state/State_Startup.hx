@@ -155,6 +155,8 @@ class State_Startup extends BaseState
 		}
 		
 		Kernel.getInstance().getSoundManager().playSound("audio/noise.wav");
+		
+		Kernel.getInstance().getStateManager().switchState(new State_NetworkTest());
 	}
 	
 	

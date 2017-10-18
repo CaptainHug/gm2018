@@ -20,6 +20,7 @@
     <class path="C:\HaxeToolkit\haxe\lib\lime\5,6,0" />
     <class path="C:\HaxeToolkit\haxe\lib\actuate\1,8,7" />
     <class path="src" />
+    <class path="lib" />
     <class path="C:\HaxeToolkit\haxe\lib\openfl\6,2,0\externs\core\flash" />
     <class path="C:\HaxeToolkit\haxe\lib\openfl\6,2,0\externs\core\openfl" />
     <class path="C:\HaxeToolkit\haxe\lib\openfl\6,2,0\externs\extras" />

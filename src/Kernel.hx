@@ -1,4 +1,5 @@
 package;
+import network.GameServer;
 import openfl.errors.Error;
 import ui.Sprite;
 
@@ -15,6 +16,7 @@ class Kernel extends ui.Sprite
 	private var _popupManager:PopupManager;
 	
 	private var _soundManager:SoundManager;
+	private var _gameServer:GameServer;
 	
 	
 	public function new() 
@@ -35,6 +37,7 @@ class Kernel extends ui.Sprite
 		addChild(_popupManager);
 		
 		_soundManager = new SoundManager();
+		_gameServer = new GameServer();
 	}
 	
 	
@@ -79,4 +82,10 @@ class Kernel extends ui.Sprite
 	{
 		return _soundManager;
 	}
+	
+	public function getGameServer():GameServer
+	{
+		return _gameServer;
+	}
+	
 }

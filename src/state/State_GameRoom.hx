@@ -7,7 +7,7 @@ import network.GameServerEvent;
  * ...
  * @author hug
  */
-class State_NetworkTest extends BaseState 
+class State_GameRoom extends BaseState 
 {
 	private var _server:GameServer;
 	
@@ -23,30 +23,21 @@ class State_NetworkTest extends BaseState
 	{
 		super.init();
 		
-		trace("State_NetworkTest");
+		trace("State_GameRoom");
 		
-		_server = new GameServer();
-		_server.addEventListener(GameServerEvent.onConnection, onConnection);
-		_server.addEventListener(GameServerEvent.onConnectionLost, onConnectionLost);
+		_server = Kernel.getInstance().getGameServer();
 		_server.addEventListener(GameServerEvent.onExtensionResponse, onExtensionResponse);
-		_server.connect(Config.SERVER_HOST, Config.SERVER_PORT);
 	}
 	
 	
 	override public function dispose():Void
 	{
+		if (_server != null) {
+			_server.removeEventListener(GameServerEvent.onExtensionResponse, onExtensionResponse);
+		}
+		
 		super.dispose();
 		
-	}
-	
-	
-	private function onConnection(e:GameServerEvent):Void
-	{
-		trace("onConnection");
-		
-		_server.sendExtMessage("lobby", "signup", { name:"cramwell", password:"ballbags" } );
-		
-		trace("boom");
 	}
 	
 	
@@ -56,19 +47,27 @@ class State_NetworkTest extends BaseState
 		
 		if (e.data) {
 			switch(e.data.cmd) {
-				case "loginOK":
+				case "onJoinRoom":
 				{
+					trace("onExtensionResponse: onJoinRoom");
+					
+					/*
 					if (e.data.params) {
 						trace("login success: " + e.data.params.name);
+						
+						Kernel.getInstance().getStateManager().switchState(new State_GameRoom());
 					}
+					*/
+				}
+				case "onMove":
+				{
+					trace("onExtensionResponse: onMove");
+				}
+				case "onChat":
+				{
+					trace("onExtensionResponse: onChat");
 				}
 			}
 		}
-	}
-	
-	
-	private function onConnectionLost(e:GameServerEvent):Void
-	{
-		trace("onConnectionLost");
 	}
 }

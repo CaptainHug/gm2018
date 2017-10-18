@@ -104,7 +104,7 @@ class GameServer extends EventDispatcher
 		if (_state != STATE_CONNECTED) return;
 		
 		if (e != null && e.args != null) {
-			dispatchEvent(new GameServerEvent(GameServerEvent.onExtensionResponse, false, false, e.args));
+			dispatchEvent(new GameServerEvent(GameServerEvent.onExtensionResponse, false, false, e.args[0]));
 		}
 	}
 	

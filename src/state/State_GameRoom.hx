@@ -2,6 +2,9 @@ package state;
 import haxe.Json;
 import network.GameServer;
 import network.GameServerEvent;
+import openfl.Lib;
+import openfl.events.KeyboardEvent;
+import openfl.events.MouseEvent;
 
 /**
  * ...
@@ -27,17 +30,46 @@ class State_GameRoom extends BaseState
 		
 		_server = Kernel.getInstance().getGameServer();
 		_server.addEventListener(GameServerEvent.onExtensionResponse, onExtensionResponse);
+		
+		_server.sendExtMessage("game", "onJoinRoom", {});
+		
+		graphics.beginFill(0xff00ff);
+		graphics.drawRect(0, 0, Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
+		graphics.endFill();
+		mouseEnabled = true;
+		mouseChildren = false;
+		addEventListener(MouseEvent.CLICK, onClick);
+		
+		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 	}
 	
 	
 	override public function dispose():Void
 	{
+		Lib.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		removeEventListener(MouseEvent.CLICK, onClick);
+		
 		if (_server != null) {
 			_server.removeEventListener(GameServerEvent.onExtensionResponse, onExtensionResponse);
 		}
 		
 		super.dispose();
 		
+	}
+	
+	
+	private function onClick(e:MouseEvent):Void
+	{
+		var posX:Int = cast(e.stageX, Int);
+		var posY:Int = cast(e.stageY, Int);
+		
+		_server.sendExtMessage("game", "onMove", {posX:posX, posY:posY});
+	}
+	
+	
+	private function onKeyDown(e:KeyboardEvent):Void
+	{
+		_server.sendExtMessage("game", "onChat", {message:e.keyCode});
 	}
 	
 	

@@ -3,7 +3,7 @@
 	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
 	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
-	<meta title="gm2018" package="gm2018" version="1.0.0" company="hug" />
+	<meta title="gm2018" package="com.lowburngames.gm2018" version="1.0.0" company="hug" />
 	
 	<!-- output -->
 	<app main="Main" file="gm2018" path="bin" />

@@ -15,6 +15,7 @@ import ui.Image;
 import ui.Label;
 import ui.Scale3Image;
 import ui.Scale9Image;
+import ui.TextInput;
 import ui.data.AnimatedSprite;
 import ui.data.AnimationState;
 import ui.data.SpriteSheet;
@@ -31,6 +32,7 @@ class State_Startup extends BaseState
 	private var _scale3:Scale3Image;
 	private var _scale9:Scale9Image;
 	private var _anim:AnimatedSprite;
+	private var _textInput:TextInput;
 	
 	
 	public function new() 
@@ -101,6 +103,12 @@ class State_Startup extends BaseState
 		_button.addEventListener(Button.TRIGGERED, onClickButton);
 		addChild(_button);
 		
+		_textInput = new TextInput();
+		_textInput.setWidth(200);
+		_textInput.setHeight(60);
+		_textInput.setDisplayAsPassword(false);
+		addChild(_textInput);
+		
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		
 		Kernel.getInstance().getSoundManager().playMusic("audio/music");
@@ -134,6 +142,11 @@ class State_Startup extends BaseState
 		if (_scale9 != null) {
 			_scale9.dispose();
 			_scale9 = null;
+		}
+		
+		if (_textInput != null) {
+			_textInput.dispose();
+			_textInput = null;
 		}
 		
 		super.dispose();

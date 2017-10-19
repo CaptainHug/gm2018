@@ -214,6 +214,12 @@ class State_Login extends BaseState
 						Kernel.getInstance().getStateManager().switchState(new State_GameRoom());
 					}
 				}
+				case "onLoginError":
+				{
+					if (e.data.params != null) {
+						trace("login error: " + Json.stringify(e.data.params));
+					}
+				}
 			}
 		}
 	}

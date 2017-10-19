@@ -63,11 +63,23 @@ class State_Login extends BaseState
 	{
 		trace("onExtensionResponse: " + Json.stringify(e.data));
 		
-		if (e.data) {
+		if (e.data != null) {
 			switch(e.data.cmd) {
-				case "loginOK":
+				case "onSignupOK":
 				{
-					if (e.data.params) {
+					if (e.data.params != null) {
+						trace("signup success: " + Json.stringify(e.data.params));
+					}
+				}
+				case "onSignupError":
+				{
+					if (e.data.params != null) {
+						trace("signup error: " + Json.stringify(e.data.params));
+					}
+				}
+				case "onLoginOK":
+				{
+					if (e.data.params != null) {
 						trace("login success: " + e.data.params.name);
 						
 						Kernel.getInstance().getStateManager().switchState(new State_GameRoom());

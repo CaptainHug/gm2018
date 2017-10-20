@@ -130,6 +130,27 @@ class State_GameRoom extends BaseState
 					
 					playerData = Json.parse(e.data.params.player);
 					_self.setName(playerData.name);
+					
+					// set up all the existing server players
+					var allPlayerData:Dynamic = Json.parse(e.data.params.allPlayers);
+					if (allPlayerData != null) {
+						var fields:Array<String> = Reflect.fields(allPlayerData);
+						var playerId:String;
+						for (playerId in fields) {
+							if (playerId != e.data.params.playerId) {
+								playerData = Reflect.field(allPlayerData, playerId);
+								if(playerData != null) {
+									playerObj = new Player();
+									playerObj.mouseEnabled = false;
+									playerObj.setName(playerData.name);
+									playerObj.x = playerData.x;
+									playerObj.y = playerData.y;
+									_players.set(playerId, playerObj);
+									_playArea.addChild(playerObj);
+								}
+							}
+						}
+					}
 				}
 				
 				case "onBroadcastJoinRoom":
@@ -137,11 +158,15 @@ class State_GameRoom extends BaseState
 					trace("onExtensionResponse: onBroadcastJoinRoom");
 					
 					playerData = Json.parse(e.data.params.player);
-					playerObj = new Player();
-					playerObj.mouseEnabled = false;
-					playerObj.setName(playerData.name);
-					_players.set(e.data.params.playerId, playerObj);
-					_playArea.addChild(playerObj);
+					if(playerData != null) {
+						playerObj = new Player();
+						playerObj.mouseEnabled = false;
+						playerObj.setName(playerData.name);
+						playerObj.x = playerData.x;
+						playerObj.y = playerData.y;
+						_players.set(e.data.params.playerId, playerObj);
+						_playArea.addChild(playerObj);
+					}
 				}
 				
 				case "onBroadcastMove":

@@ -169,6 +169,19 @@ class State_GameRoom extends BaseState
 					}
 				}
 				
+				case "onBroadcastPlayerLeft":
+				{
+					playerObj = _players.get(e.data.params.playerId);
+					if (playerObj != null) {
+						if (_playArea.contains(playerObj)) {
+							_playArea.removeChild(playerObj);
+						}
+						playerObj.dispose();
+						playerObj = null;
+						_players.remove(e.data.params.playerId);
+					}
+				}
+				
 				case "onBroadcastMove":
 				{
 					trace("onExtensionResponse: onBroadcastMove");

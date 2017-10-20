@@ -1,5 +1,6 @@
 package;
 import network.GameServer;
+import openfl.Lib;
 import openfl.errors.Error;
 import ui.Sprite;
 
@@ -38,6 +39,8 @@ class Kernel extends ui.Sprite
 		
 		_soundManager = new SoundManager();
 		_gameServer = new GameServer();
+		
+		Lib.current.stage.application.onExit.add(onApplicationExit);
 	}
 	
 	
@@ -58,6 +61,7 @@ class Kernel extends ui.Sprite
 		if (_popupManager != null) { _popupManager.dispose(); _popupManager = null; }
 		
 		if (_soundManager != null) { _soundManager.dispose(); _soundManager = null; }
+		if (_gameServer != null) { _gameServer.disconnect(); _gameServer = null; }
 		
 		super.dispose();
 	}
@@ -88,4 +92,10 @@ class Kernel extends ui.Sprite
 		return _gameServer;
 	}
 	
+	
+	private function onApplicationExit(exitCode:Int)
+	{
+		trace("onApplicationExit: exitCode = " + exitCode);
+		dispose();
+	}
 }

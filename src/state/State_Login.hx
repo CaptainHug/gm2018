@@ -1,7 +1,7 @@
 package state;
 import haxe.Json;
 import network.GameServer;
-import network.GameServerEvent;
+import network.event.GameServerEvent;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.events.Event;

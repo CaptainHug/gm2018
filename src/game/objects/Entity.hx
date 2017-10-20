@@ -1,12 +1,12 @@
 package game.objects;
 
-import ui.Sprite;
+import ui.UIElement;
 
 /**
  * ...
  * @author hug
  */
-class Entity extends Sprite 
+class Entity extends UIElement 
 {
 
 	public function new() 

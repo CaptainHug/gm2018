@@ -3,6 +3,7 @@ package network;
 import com.gemioli.io.Socket;
 import com.gemioli.io.events.SocketEvent;
 import haxe.Json;
+import network.event.GameServerEvent;
 import openfl.events.EventDispatcher;
 import openfl.events.IEventDispatcher;
 

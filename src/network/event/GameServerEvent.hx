@@ -1,4 +1,4 @@
-package network;
+package network.event;
 
 import openfl.events.Event;
 

@@ -1,10 +1,14 @@
 package state;
+import game.objects.Player;
 import haxe.Json;
+import motion.Actuate;
 import network.GameServer;
-import network.GameServerEvent;
+import network.event.GameServerEvent;
 import openfl.Lib;
-import openfl.events.KeyboardEvent;
 import openfl.events.MouseEvent;
+import ui.ChatPanel;
+import ui.Sprite;
+import ui.event.UIDataEvent;
 
 /**
  * ...
@@ -13,6 +17,10 @@ import openfl.events.MouseEvent;
 class State_GameRoom extends BaseState 
 {
 	private var _server:GameServer;
+	private var _playArea:Sprite;
+	private var _self:Player;
+	private var _players:Map<String, Player>;
+	private var _chatPanel:ChatPanel;
 	
 	
 	public function new() 
@@ -33,15 +41,24 @@ class State_GameRoom extends BaseState
 		
 		_server.sendExtMessage("game", "joinRoom", {});
 		
+		_playArea = new Sprite();
+		_playArea.graphics.beginFill(0xff00ff);
+		_playArea.graphics.drawRect(0, 0, Lib.current.stage.stageWidth, Lib.current.stage.stageHeight * 0.84);
+		_playArea.graphics.endFill();
+		_playArea.mouseEnabled = true;
+		_playArea.addEventListener(MouseEvent.CLICK, onClick);
+		addChild(_playArea);
 		
-		graphics.beginFill(0xff00ff);
-		graphics.drawRect(0, 0, Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
-		graphics.endFill();
-		mouseEnabled = true;
-		mouseChildren = false;
-		addEventListener(MouseEvent.CLICK, onClick);
+		_self = new Player();
+		_self.mouseEnabled = false;
+		_playArea.addChild(_self);
 		
-		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		_players = new Map<String, Player>();
+		
+		_chatPanel = new ChatPanel();
+		_chatPanel.addEventListener(ChatPanel.MESSAGE_SENT, onMessageSent);
+		addChild(_chatPanel);
+		_chatPanel.y = Lib.current.stage.stageHeight * 0.84;
 	}
 	
 	
@@ -49,11 +66,20 @@ class State_GameRoom extends BaseState
 	{
 		trace("State_GameRoom: dispose");
 		
-		Lib.current.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		removeEventListener(MouseEvent.CLICK, onClick);
 		
 		if (_server != null) {
 			_server.removeEventListener(GameServerEvent.onExtensionResponse, onExtensionResponse);
+		}
+		
+		// TODO: cleanup self
+		// TODO: cleanup players
+		// TODO: cleanup playArea
+		
+		if (_chatPanel != null) {
+			_chatPanel.removeEventListener(ChatPanel.MESSAGE_SENT, onMessageSent);
+			_chatPanel.dispose();
+			_chatPanel = null;
 		}
 		
 		super.dispose();
@@ -67,12 +93,17 @@ class State_GameRoom extends BaseState
 		var posY:Int = cast(e.stageY, Int);
 		
 		_server.sendExtMessage("game", "move", {posX:posX, posY:posY});
+		
+		Actuate.tween(_self, 2, {x:posX, y:posY});
 	}
 	
 	
-	private function onKeyDown(e:KeyboardEvent):Void
+	private function onMessageSent(e:UIDataEvent):Void
 	{
-		_server.sendExtMessage("game", "chat", {message:e.keyCode});
+		var message:String = e.data.message;
+		_server.sendExtMessage("game", "chat", {message:message});
+		
+		_self.chat(message);
 	}
 	
 	
@@ -82,26 +113,30 @@ class State_GameRoom extends BaseState
 		
 		if (e.data) {
 			switch(e.data.cmd) {
+				
 				case "onJoinRoom":
 				{
 					trace("onExtensionResponse: onJoinRoom");
 					
-					/*
-					if (e.data.params) {
-						trace("login success: " + e.data.params.name);
-						
-						Kernel.getInstance().getStateManager().switchState(new State_GameRoom());
-					}
-					*/
+					var player:Dynamic = Json.parse(e.data.params.player);
+					_self.setName(player.name);
 				}
-				case "onMove":
+				
+				case "onBroadcastJoinRoom":
 				{
-					trace("onExtensionResponse: onMove");
+					trace("onExtensionResponse: onBroadcastJoinRoom");
 				}
-				case "onChat":
+				
+				case "onBroadcastMove":
 				{
-					trace("onExtensionResponse: onChat");
+					trace("onExtensionResponse: onBroadcastMove");
 				}
+				
+				case "onBroadcastChat":
+				{
+					trace("onExtensionResponse: onBroadcastChat");
+				}
+				
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package state;
 import network.GameServer;
-import network.GameServerEvent;
+import network.event.GameServerEvent;
 import openfl.Lib;
 import openfl.text.TextFormatAlign;
 import ui.Label;

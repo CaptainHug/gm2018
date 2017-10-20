@@ -66,15 +66,22 @@ class State_GameRoom extends BaseState
 	{
 		trace("State_GameRoom: dispose");
 		
-		removeEventListener(MouseEvent.CLICK, onClick);
-		
 		if (_server != null) {
 			_server.removeEventListener(GameServerEvent.onExtensionResponse, onExtensionResponse);
 		}
 		
-		// TODO: cleanup self
+		if (_self != null) {
+			_self.dispose();
+			_self = null;
+		}
+		
 		// TODO: cleanup players
-		// TODO: cleanup playArea
+		
+		if (_playArea != null) {
+			_playArea.removeEventListener(MouseEvent.CLICK, onClick);
+			_playArea.dispose();
+			_playArea = null;
+		}
 		
 		if (_chatPanel != null) {
 			_chatPanel.removeEventListener(ChatPanel.MESSAGE_SENT, onMessageSent);
@@ -111,6 +118,9 @@ class State_GameRoom extends BaseState
 	{
 		trace("onExtensionResponse: " + Json.stringify(e.data));
 		
+		var playerData:Dynamic;
+		var playerObj:Player;
+		
 		if (e.data) {
 			switch(e.data.cmd) {
 				
@@ -118,23 +128,43 @@ class State_GameRoom extends BaseState
 				{
 					trace("onExtensionResponse: onJoinRoom");
 					
-					var player:Dynamic = Json.parse(e.data.params.player);
-					_self.setName(player.name);
+					playerData = Json.parse(e.data.params.player);
+					_self.setName(playerData.name);
 				}
 				
 				case "onBroadcastJoinRoom":
 				{
 					trace("onExtensionResponse: onBroadcastJoinRoom");
+					
+					playerData = Json.parse(e.data.params.player);
+					playerObj = new Player();
+					playerObj.mouseEnabled = false;
+					playerObj.setName(playerData.name);
+					_players.set(e.data.params.playerId, playerObj);
+					_playArea.addChild(playerObj);
 				}
 				
 				case "onBroadcastMove":
 				{
 					trace("onExtensionResponse: onBroadcastMove");
+					
+					playerObj = _players.get(e.data.params.playerId);
+					if(playerObj != null) {
+						var posX:Int = e.data.params.posX;
+						var posY:Int = e.data.params.posY;
+						Actuate.tween(playerObj, 2, {x:posX, y:posY});
+					}
 				}
 				
 				case "onBroadcastChat":
 				{
 					trace("onExtensionResponse: onBroadcastChat");
+					
+					playerObj = _players.get(e.data.params.playerId);
+					if(playerObj != null) {
+						var message:String = e.data.params.message;
+						playerObj.chat(message);
+					}
 				}
 				
 			}

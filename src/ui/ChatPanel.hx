@@ -26,12 +26,12 @@ class ChatPanel extends UIElement
 		
 		_textInput = new TextInput();
 		_textInput.setWidth(stageWidth * 0.8);
-		_textInput.setHeight(stageHeight * 0.16);
+		_textInput.setHeight(stageHeight * 0.09);
 		addChild(_textInput);
 		
 		_send = new Button(new Image(Assets.getBitmapData("img/ui/button_up.png")), "Send");
 		_send.setWidth(stageWidth * 0.2);
-		_send.setHeight(stageHeight * 0.16);
+		_send.setHeight(stageHeight * 0.09);
 		_send.x = stageWidth - _send.getWidth();
 		_send.addEventListener(Button.TRIGGERED, onClickSend);
 		addChild(_send);

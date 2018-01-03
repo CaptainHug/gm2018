@@ -42,7 +42,8 @@ class Player extends Entity
 		
 		_chat.setWidth(_avatar.width);
 		_chat.setHeight(30);
-		_chat.y = _avatar.y + _avatar.height;
+		
+		_name.y = _avatar.y + _avatar.height;
 	}
 	
 	

@@ -1,6 +1,9 @@
 package game.objects;
 import openfl.Assets;
+import openfl.filters.BitmapFilterQuality;
+import openfl.filters.GlowFilter;
 import openfl.text.TextFormatAlign;
+import ui.ChatBubble;
 import ui.Image;
 import ui.Label;
 
@@ -10,40 +13,40 @@ import ui.Label;
  */
 class Player extends Entity 
 {
-	private var _name:Label;
 	private var _avatar:Image;
-	private var _chat:Label;
+	private var _name:Label;
+	private var _chat:ChatBubble;
 	
 	
 	public function new() 
 	{
 		super();
 		
+		// TODO: allow this to be set / swapped
+		_avatar = new Image(Assets.getBitmapData("img/avatars/1.png"));
+		_avatar.x = -_avatar.width / 2;
+		_avatar.y = -_avatar.height;
+		addChild(_avatar);
+		
 		_name = new Label();
 		_name.setAlign(TextFormatAlign.CENTER);
 		_name.setVerticalAlign(Label.ALIGN_CENTER);
+		_name.filters = [new GlowFilter(0x000000, 1, 6, 6, 6, BitmapFilterQuality.LOW)];
 		addChild(_name);
 		
-		// TODO: allow this to be set / swapped
-		_avatar = new Image(Assets.getBitmapData("img/avatars/1.png"));
-		addChild(_avatar);
-		
-		_chat = new Label();
-		_chat.setAlign(TextFormatAlign.CENTER);
-		_chat.setVerticalAlign(Label.ALIGN_CENTER);
+		_chat = new ChatBubble();
 		addChild(_chat);
 		
 		// position/size elements
-		// TODO: move to Layout and use screensize percentages for scaling support
-		_name.setWidth(_avatar.width);
-		_name.setHeight(30);
+		// TODO: move to Layout
+		_name.setWidth(_avatar.width * 2);
+		_name.setHeight(22);
 		
-		_avatar.y = _name.y + _name.getHeight();
-		
-		_chat.setWidth(_avatar.width);
-		_chat.setHeight(30);
-		
+		_name.x = _avatar.x + ((_avatar.width - _name.getWidth()) / 2);
 		_name.y = _avatar.y + _avatar.height;
+		
+		_chat.x = _avatar.x + (_avatar.width / 2);
+		_chat.y = _avatar.y;
 	}
 	
 	
@@ -86,8 +89,7 @@ class Player extends Entity
 	
 	public function chat(message:String):Void
 	{
-		// TODO: fade out after so many seconds?
-		_chat.setText(message);
+		_chat.showMessage(message);
 	}
 	
 }

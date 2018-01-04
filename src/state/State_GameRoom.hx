@@ -115,10 +115,8 @@ class State_GameRoom extends BaseState
 		
 		_server.sendExtMessage("game", "move", {posX:posX, posY:posY});
 		
-		var distance:Float = Math.abs(Math.sqrt(Math.pow(_self.x - (posX - (_self.width / 2)), 2) + Math.pow(_self.y - (posY - (_self.height / 2)), 2)));
-		trace("distance = " + distance);
-		
-		Actuate.tween(_self, distance * MOVEMENT_SPEED, {x:posX - (_self.width / 2), y:posY - (_self.height / 2)}).ease(Linear.easeNone);
+		var distance:Float = Math.abs(Math.sqrt(Math.pow(_self.x - posX, 2) + Math.pow(_self.y - posY, 2)));
+		Actuate.tween(_self, distance * MOVEMENT_SPEED, {x:posX, y:posY}).ease(Linear.easeNone);
 	}
 	
 	
@@ -147,8 +145,8 @@ class State_GameRoom extends BaseState
 					
 					playerData = Json.parse(e.data.params.player);
 					_self.setName(playerData.name);
-					_self.x = playerData.x - (_self.width / 2);
-					_self.y = playerData.y - (_self.height / 2);
+					_self.x = playerData.x;
+					_self.y = playerData.y;
 					
 					// set up all the existing server players
 					var allPlayerData:Dynamic = Json.parse(e.data.params.allPlayers);
@@ -162,8 +160,8 @@ class State_GameRoom extends BaseState
 									playerObj = new Player();
 									playerObj.mouseEnabled = false;
 									playerObj.setName(playerData.name);
-									playerObj.x = playerData.x - (playerObj.width / 2);
-									playerObj.y = playerData.y - (playerObj.height / 2);
+									playerObj.x = playerData.x;
+									playerObj.y = playerData.y;
 									_players.set(playerId, playerObj);
 									_playArea.addChild(playerObj);
 								}
@@ -181,8 +179,8 @@ class State_GameRoom extends BaseState
 						playerObj = new Player();
 						playerObj.mouseEnabled = false;
 						playerObj.setName(playerData.name);
-						playerObj.x = playerData.x - (playerObj.width / 2);
-						playerObj.y = playerData.y - (playerObj.height / 2);
+						playerObj.x = playerData.x;
+						playerObj.y = playerData.y;
 						_players.set(e.data.params.playerId, playerObj);
 						_playArea.addChild(playerObj);
 					}
@@ -210,10 +208,8 @@ class State_GameRoom extends BaseState
 						var posX:Int = e.data.params.posX;
 						var posY:Int = e.data.params.posY;
 						
-						var distance:Float = Math.abs(Math.sqrt(Math.pow(playerObj.x - (posX - (playerObj.width / 2)), 2) + Math.pow(playerObj.y - (posY - (playerObj.height / 2)), 2)));
-						trace("distance = " + distance);
-						
-						Actuate.tween(playerObj, distance * MOVEMENT_SPEED, {x:posX - (playerObj.width / 2), y:posY - (playerObj.height / 2)}).ease(Linear.easeNone);
+						var distance:Float = Math.abs(Math.sqrt(Math.pow(playerObj.x - posX, 2) + Math.pow(playerObj.y - posY, 2)));
+						Actuate.tween(playerObj, distance * MOVEMENT_SPEED, {x:posX, y:posY}).ease(Linear.easeNone);
 					}
 				}
 				

@@ -44,6 +44,9 @@ class Button extends UIElement
 		_hoverSkin = hoverSkin;
 		_disabledSkin = disabledSkin;
 		
+		_width = _upSkin.width;
+		_height = _upSkin.height;
+		
 		_label = new Label();
 		_label.setText(label);
 		_label.setAlign(TextFormatAlign.CENTER);

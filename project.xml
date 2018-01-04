@@ -9,7 +9,7 @@
 	<app main="Main" file="gm2018" path="bin" />
 	
 	<window background="#000000" fps="60" />
-	<window width="1024" height="768" unless="mobile" />
+	<window width="1280" height="720" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
 	
 	<!-- classpath, haxe libs -->
@@ -27,7 +27,7 @@
 	
 	<assets path="assets/fonts" rename="fonts" />
 	
-	<!-- optimize output
-	<haxeflag name="-dce full" /> -->
+	<!-- optimize output -->
+	<haxeflag name="-dce full" />
 	
 </project>

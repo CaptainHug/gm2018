@@ -7,6 +7,9 @@ import network.GameServer;
 import network.event.GameServerEvent;
 import openfl.Assets;
 import openfl.Lib;
+import openfl.display.DisplayObject;
+import openfl.errors.Error;
+import openfl.events.Event;
 import openfl.events.MouseEvent;
 import ui.ChatPanel;
 import ui.Image;
@@ -47,12 +50,12 @@ class State_GameRoom extends BaseState
 		
 		_server.sendExtMessage("game", "joinRoom", {});
 		
-		_bg = new Image(Assets.getBitmapData("img/maps/street.jpg"));
+		_bg = new Image(Assets.getBitmapData("img/maps/back.jpg"));
 		addChild(_bg);
 		
 		_playArea = new Sprite();
 		_playArea.graphics.beginFill(0xff00ff, 0);
-		_playArea.graphics.drawRect(0, 0, Lib.current.stage.stageWidth, Lib.current.stage.stageHeight * 0.91);
+		_playArea.graphics.drawRect(0, 0, Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
 		_playArea.graphics.endFill();
 		_playArea.mouseEnabled = true;
 		_playArea.addEventListener(MouseEvent.CLICK, onClick);
@@ -67,13 +70,18 @@ class State_GameRoom extends BaseState
 		_chatPanel = new ChatPanel();
 		_chatPanel.addEventListener(ChatPanel.MESSAGE_SENT, onMessageSent);
 		addChild(_chatPanel);
+		_chatPanel.x = (Lib.current.stage.stageWidth - _chatPanel.getWidth()) / 2;
 		_chatPanel.y = Lib.current.stage.stageHeight * 0.91;
+		
+		addEventListener(Event.ENTER_FRAME, onEnterFrame);
 	}
 	
 	
 	override public function dispose():Void
 	{
 		trace("State_GameRoom: dispose");
+		
+		removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 		
 		if (_server != null) {
 			_server.removeEventListener(GameServerEvent.onExtensionResponse, onExtensionResponse);
@@ -224,6 +232,21 @@ class State_GameRoom extends BaseState
 					}
 				}
 				
+			}
+		}
+	}
+	
+	
+	private function onEnterFrame(e:Event=null):Void
+	{
+		// depth sort the objects in the play area
+		var len:Int = _playArea.numChildren;
+		var i:Int;
+		var j:Int;
+		
+		for(i in 0...len-1) {
+			for (j in i + 1...len) {
+				if (_playArea.getChildAt(i).y > _playArea.getChildAt(j).y) _playArea.swapChildrenAt(i, j);
 			}
 		}
 	}

@@ -63,6 +63,7 @@ class State_GameRoom extends BaseState
 		
 		_self = new Player();
 		_self.mouseEnabled = false;
+		_self.visible = false;
 		_playArea.addChild(_self);
 		
 		_players = new Map<String, Player>();
@@ -155,6 +156,7 @@ class State_GameRoom extends BaseState
 					_self.setName(playerData.name);
 					_self.x = playerData.x;
 					_self.y = playerData.y;
+					_self.visible = true;
 					
 					// set up all the existing server players
 					var allPlayerData:Dynamic = Json.parse(e.data.params.allPlayers);
